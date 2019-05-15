@@ -1,41 +1,26 @@
-<style>
-    div,
-    section {
-        border: 1px solid cornflowerblue;
-        border-radius: 5px;
-        margin-bottom: 15px;
-        padding: 10px;
-    }
-</style>
-
-<template>
-    <weather :location="location"></weather>
-    <div>
-        <label>Filter <input v-model="filter" debounce="100"></label>
-    </div>
-    <phone-number v-show="showPhoneNumbers" :id="$index" :entry="entry" v-for="entry in numbers | filterBy filter"
-                  @phonenumber-delete="deleteEntry" @modified="saveEntries | debounce 500"
-                  v-ref:phonenumbers>
-    </phone-number>
-    <div>
-        <label><input v-model="showPhoneNumbers" type="checkbox"> Show phonebook <img slot="header" src="assets/phone.svg" alt="" width="15" height="15"></label>
-    </div>
-    <div>
-        <input v-model="newName" @keyup.enter="addNewEntry">
-        <input v-model="newNumber" @keyup.enter="addNewEntry">
-        <button @click="addNewEntry">Add</button>
-    </div>
-</template>
-
-<script type="text/ecmascript-6">
-    import PhoneNumber from './phoneNumber.vue'
-    import Weather from './weather.vue'
-
-    export default {
+export default {
         components: {
             PhoneNumber,
             Weather
         },
+        template: `
+        <weather :location="location"></weather>
+          <div>
+              <label>Filter <input v-model="filter" debounce="100"></label>
+          </div>
+          <phone-number v-show="showPhoneNumbers" :id="$index" :entry="entry" v-for="entry in numbers | filterBy filter"
+                        @phonenumber-delete="deleteEntry" @modified="saveEntries | debounce 500"
+                        v-ref:phonenumbers>
+          </phone-number>
+          <div>
+              <label><input v-model="showPhoneNumbers" type="checkbox"> Show phonebook <img slot="header" src="assets/phone.svg" alt="" width="15" height="15"></label>
+          </div>
+          <div>
+              <input v-model="newName" @keyup.enter="addNewEntry">
+              <input v-model="newNumber" @keyup.enter="addNewEntry">
+              <button @click="addNewEntry">Add</button>
+          </div>
+        `,
         created () {
             // load configuration as early as possible
             this.config = require('./config.hson');
@@ -120,5 +105,4 @@
                 this.saveEntries();
             }
         }
-    }
-</script>
+    };

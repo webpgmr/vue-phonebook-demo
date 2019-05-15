@@ -1,6 +1,19 @@
-// Import stylesheets
-import './style.css';
+/**
+ * Created by andre on 10.12.15.
+ */
 
-// Write Javascript code!
-const appDiv = document.getElementById('app');
-appDiv.innerHTML = `<h1>JS Starter</h1>`;
+// load vue object
+Vue = require('vue');
+// load vue plugins
+Vue.use(require('vue-resource'));
+
+// load main component
+var App = require('./phone.js');
+
+// create vue instance and assign main component
+new Vue({
+    el: 'body',
+    components: {
+        app: App
+    }
+});
